@@ -16,3 +16,10 @@ def validate_payload(payload):
     if not payload:
         return "Payload cannot be empty"
     return None
+
+# Ensure input field is present and non-empty in the payload
+def validate_required_fields(data, field):
+    #Checks if  'Keys' exist in payload and ensure the 'value' is not empty
+    if field not in data or not str(data[field]).strip():
+        return f"{field.capitalize()} is required and cannot be empty"
+    return None
