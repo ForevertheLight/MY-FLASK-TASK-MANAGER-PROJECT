@@ -23,3 +23,10 @@ def validate_required_fields(data, field):
     if field not in data or not str(data[field]).strip():
         return f"{field.capitalize()} is required and cannot be empty"
     return None
+
+# Ensure input field only accept alphabet, and a minimum length of 3 characters
+def validate_field_length(data,field,min=3):
+    # Checks if the value is missing from the dictionary, or if it is not an alphabet or if it is not up to three characters
+     if field not in data or not (data[field].isalpha())  or len(str(data[field]).strip()) < min:
+          return f"{field.capitalize()} cannot be less than {min} alphabetic characters" 
+     return None
