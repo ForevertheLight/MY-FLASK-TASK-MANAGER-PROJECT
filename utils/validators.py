@@ -30,3 +30,10 @@ def validate_field_length(data,field,min=3):
      if field not in data or not (data[field].isalpha())  or len(str(data[field]).strip()) < min:
           return f"{field.capitalize()} cannot be less than {min} alphabetic characters" 
      return None
+
+# Ensure email format is valid
+def validate_email(email):
+    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    # Use re.match to check if the email matches the pattern
+    return bool(re.match(pattern, email))
+
