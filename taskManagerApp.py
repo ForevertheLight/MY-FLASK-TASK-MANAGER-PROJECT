@@ -11,6 +11,7 @@ next_user_id=1
 next_task_id=1
 
 #Creating the User Model
+#A user in this system needs five things
 user = {
     'id': 1,
     'firstName': 'Joshua',
