@@ -37,3 +37,8 @@ def validate_email(email):
     # Use re.match to check if the email matches the pattern
     return bool(re.match(pattern, email))
 
+# Ensure phone number is a digit and must not be less or greater than 11 digits
+def valid_phone_isDigit_and_length(phone, min = 11):
+     # Checks if phone number contains only numeric characters and not shorter that 11 digits
+     return (phone.isdigit() and len(phone) >= min)
+
