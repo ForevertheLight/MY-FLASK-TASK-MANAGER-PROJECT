@@ -10,4 +10,11 @@ tasks={}
 next_user_id=1
 next_task_id=1
 
-
+#Creating the User Model
+user = {
+    'id': 1,
+    'firstName': 'Joshua',
+    'lastName': 'Fashola',
+    'email': 'fashjosh2004@gmail.com',
+    'phone': '08160840249'
+}
