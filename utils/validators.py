@@ -80,3 +80,10 @@ def positive_float(value, min = 1.0):
     # Also ensure that the float value is greater than or equal to the minimum value (default is 1.0)
     return isinstance(value, float) and value >= min
 
+# Validate positive value
+def positive_value(value):
+    # Check if the given 'value' is either a positive integer or a positive float
+    # Calls the 'positive_integer' function to validate integer values
+    # Calls the 'positive_float' function to validate float values
+    # Returns True if either check passes (i.e., the value is a positive number)
+    return positive_integer(value) or positive_float(value)
