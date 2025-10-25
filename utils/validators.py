@@ -52,5 +52,18 @@ def valid_phone_format(phone):
 def validate_phone(phone):
      return valid_phone_isDigit_and_length(phone) and valid_phone_format(phone)
 
+# Ensure input field uniqueness
+def validate_unique_field(tables, field, value):
+    # Checks If 'tables' is a dictionary, extract its values (records); otherwise,
+    #  use it directly as a list.
+    records = tables.values() if isinstance(tables, dict) else tables
+    # Checks if any record has the same field value (case-insensitive comparison)
+    # record.get(field, '') safely retrieves the field value or returns an empty string if missing
+    # 'any()' returns True if at least one record matches the given value
+    # The 'not' inverts the result so the function returns True only if no duplicates exist
+    return not any(
+        record.get(field, '').lower() == value.lower() 
+        for record in records
+    )
 
 
