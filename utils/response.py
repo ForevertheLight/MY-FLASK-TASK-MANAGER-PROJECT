@@ -62,3 +62,10 @@ def format_users(users):
     # Call the 'format_user' function on each user to format their details
     # Return a new list containing all formatted user dictionaries
     return [format_user(user) for user in users]
+
+# Format a list of task objects for consistent API response structure
+def format_tasks(tasks):
+    # Use a list comprehension to iterate through each task in the 'tasks' list
+    # Call the 'format_task' function on each task to format its details
+    # Return a new list containing all formatted task dictionaries
+    return [format_task(task) for task in tasks]
