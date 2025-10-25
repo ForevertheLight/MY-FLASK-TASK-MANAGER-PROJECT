@@ -15,3 +15,19 @@ def make_response(status, message, data=None, code=200):
         'data': data,
         'timestamp': datetime.now(timezone.utc).isoformat()
     }, code
+
+# Format a user object for consistent API response structure
+def format_user(user):
+    # Return a dictionary containing the user's essential details
+    # 'id' is the unique identifier for the user
+    # 'firstName' is the user's given name
+    # 'lastName' is the user's family name
+    # 'email' is the user's email address
+    # 'phone' is the user's phone number
+    return {
+        'id': user['id'],
+        'firstName': user['firstName'],
+        'lastName': user['lastName'],
+        'email': user['email'],
+        'phone': user['phone']
+    }
