@@ -55,3 +55,10 @@ def format_task(task):
         'updated_at': task['updated_at'],
         'completed_at': task['completed_at']    
     }
+
+# Format a list of user objects for consistent API response structure
+def format_users(users):
+    # Use a list comprehension to loop through each user in the 'users' list
+    # Call the 'format_user' function on each user to format their details
+    # Return a new list containing all formatted user dictionaries
+    return [format_user(user) for user in users]
