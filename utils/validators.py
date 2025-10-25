@@ -72,3 +72,11 @@ def positive_integer(value, min = 1):
     # 'isinstance(value, int)' returns True if 'value' is an integer
     # Also ensure that the integer is greater than or equal to the minimum value (default is 1)
     return isinstance(value, int) and value >= min
+
+# Ensure input value is float datatype
+def positive_float(value, min = 1.0):
+    # Check if the given 'value' is of float type
+    # 'isinstance(value, float)' returns True if 'value' is a floating-point number
+    # Also ensure that the float value is greater than or equal to the minimum value (default is 1.0)
+    return isinstance(value, float) and value >= min
+
