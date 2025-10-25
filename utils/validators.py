@@ -66,4 +66,9 @@ def validate_unique_field(tables, field, value):
         for record in records
     )
 
-
+# Ensure input value is integer datatype
+def positive_integer(value, min = 1):
+    # Check if the given 'value' is of integer type
+    # 'isinstance(value, int)' returns True if 'value' is an integer
+    # Also ensure that the integer is greater than or equal to the minimum value (default is 1)
+    return isinstance(value, int) and value >= min
