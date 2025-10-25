@@ -48,4 +48,9 @@ def valid_phone_format(phone):
     valid_prefixes = ['070', '080', '090', '081', '091']
     return any(phone.startswith(prefix) for prefix in valid_prefixes)
 
+# Validate phone number by checking both its length/digit format and valid prefix
+def validate_phone(phone):
+     return valid_phone_isDigit_and_length(phone) and valid_phone_format(phone)
+
+
 
