@@ -42,3 +42,10 @@ def valid_phone_isDigit_and_length(phone, min = 11):
      # Checks if phone number contains only numeric characters and not shorter that 11 digits
      return (phone.isdigit() and len(phone) >= min)
 
+# Phone number should start with a valid prefix
+def valid_phone_format(phone):
+    #Checks if phone number starts with one of the valid prefixes in the list below.
+    valid_prefixes = ['070', '080', '090', '081', '091']
+    return any(phone.startswith(prefix) for prefix in valid_prefixes)
+
+
