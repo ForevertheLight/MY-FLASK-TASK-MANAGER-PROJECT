@@ -106,3 +106,30 @@ def internal_error_response(message="Internal server error"):
     # The HTTP status code 500 indicates a server-side error
     return make_response("error", message, None, 500)
 
+# Format data based on its type for consistent API response structure
+def format_response(data, data_type):
+    # Check if the data type is a single user
+    # If so, call the 'format_user' function to format the user data
+    if data_type == 'user':
+        return format_user(data)
+    
+    # Check if the data type is a single task
+    # If so, call the 'format_task' function to format the task data
+    elif data_type == 'task':
+        return format_task(data)
+    
+    # Check if the data type is a list of users
+    # If so, call the 'format_users' function to format each user in the list
+    elif data_type == 'users':
+        return format_users(data)
+    
+    # Check if the data type is a list of tasks
+    # If so, call the 'format_tasks' function to format each task in the list
+    elif data_type == 'tasks':
+        return format_tasks(data)
+    
+    # If the data type does not match any known type,
+    # return the data as-is without additional formatting
+    else:
+        return data
+
