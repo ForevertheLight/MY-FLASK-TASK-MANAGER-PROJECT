@@ -114,39 +114,52 @@ def create_user():
     return success_response("User created successfully", format_response(user, 'user'), 201)
 
 
-# Define an API endpoint for creating a new task
+# Define an endpoint to create a new task
 @app.route('/api/v1/task/add', methods=['POST'])
 def create_task():
+    # Use the global variable 'next_task_id' to assign unique task IDs
     global next_task_id
+
+    # Extract JSON data from the incoming POST request
     data = request.get_json()
 
-    # Validation (similar pattern to users)
+    # Validate that the payload exists and is a proper JSON object
     payload = validate_payload(data)
     if payload:
+        # If validation fails, return a bad request response
         return bad_request_response(payload)
     
-    error = (validate_required_fields(data, 'title') or 
-             validate_required_fields(data, 'description') or 
-             validate_required_fields(data, 'duration') or 
-             validate_field_length(data, 'title'))
+    # Validate required fields: title, description, and duration
+    # Also ensure the title meets minimum length requirements
+    error = (
+        validate_required_fields(data, 'title') or 
+        validate_required_fields(data, 'description') or 
+        validate_required_fields(data, 'duration') or 
+        validate_field_length(data, 'title')
+    )
     if error:
         return bad_request_response(error)
     
-    # Optional user assignment when creating task
+    # Optionally assign the task to an existing user if 'user_id' is provided
     user_id = None
     if 'user_id' in data and isinstance(data['user_id'], int) and data['user_id'] > 0:
         user_id = data['user_id']
+        # Check if the provided user exists
         if user_id not in users:
             return not_found_response(f"User with id {user_id} not found")
     
-    # Validate uniqueness
+    # Ensure task title is unique to avoid duplicates
     if not validate_unique_field(tasks, 'title', data['title']):
         return bad_request_response(f"Task with title '{data['title']}' already exists")
    
-    # Validate duration
+    # Validate that duration is a positive integer and at least 5 minutes
     if not positive_integer(data['duration']):
-        return bad_request_response("Duration must be a positive integer representing minutes, and must not be less than 5 minutes")
+        return bad_request_response(
+            "Duration must be a positive integer representing minutes, "
+            "and must not be less than 5 minutes"
+        )
     
+    # Create a new task record
     task = {
         'id': next_task_id,
         'user_id': user_id,
@@ -159,7 +172,9 @@ def create_task():
         'completed_at': None
     }
     
+    # Store the task and increment the task counter
     tasks[next_task_id] = task
     next_task_id += 1
     
+    # Return a success response with the newly created task
     return success_response("Task created successfully", format_response(task, 'task'), 201)
