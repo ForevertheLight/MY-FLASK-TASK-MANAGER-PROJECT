@@ -88,3 +88,12 @@ def not_found_response(message="Resource not found"):
     # The HTTP status code 404 indicates that the requested resource was not found
     return make_response("error", message, None, 404)
 
+# Generate a standardized "bad request" error response for invalid client requests
+def bad_request_response(message="Bad request"):
+    # Call the 'make_response' function to build an error response object
+    # The first argument "error" indicates that the request failed
+    # 'message' provides a description of the error (default is "Bad request")
+    # The 'data' field is set to None because no valid data is returned
+    # The HTTP status code 400 represents a client-side error (bad request)
+    return make_response("error", message, None, 400)
+
