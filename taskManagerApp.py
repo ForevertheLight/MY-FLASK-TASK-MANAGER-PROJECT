@@ -112,3 +112,54 @@ def create_user():
     
     # Return a success response with formatted user data and HTTP 201 (Created)
     return success_response("User created successfully", format_response(user, 'user'), 201)
+
+
+# Define an API endpoint for creating a new task
+@app.route('/api/v1/task/add', methods=['POST'])
+def create_task():
+    global next_task_id
+    data = request.get_json()
+
+    # Validation (similar pattern to users)
+    payload = validate_payload(data)
+    if payload:
+        return bad_request_response(payload)
+    
+    error = (validate_required_fields(data, 'title') or 
+             validate_required_fields(data, 'description') or 
+             validate_required_fields(data, 'duration') or 
+             validate_field_length(data, 'title'))
+    if error:
+        return bad_request_response(error)
+    
+    # Optional user assignment when creating task
+    user_id = None
+    if 'user_id' in data and isinstance(data['user_id'], int) and data['user_id'] > 0:
+        user_id = data['user_id']
+        if user_id not in users:
+            return not_found_response(f"User with id {user_id} not found")
+    
+    # Validate uniqueness
+    if not validate_unique_field(tasks, 'title', data['title']):
+        return bad_request_response(f"Task with title '{data['title']}' already exists")
+   
+    # Validate duration
+    if not positive_integer(data['duration']):
+        return bad_request_response("Duration must be a positive integer representing minutes, and must not be less than 5 minutes")
+    
+    task = {
+        'id': next_task_id,
+        'user_id': user_id,
+        'title': data['title'],
+        'description': data['description'],
+        'status': 'pending',
+        'duration': data['duration'],
+        'created_at': datetime.now(timezone.utc).isoformat(),
+        'updated_at': None,
+        'completed_at': None
+    }
+    
+    tasks[next_task_id] = task
+    next_task_id += 1
+    
+    return success_response("Task created successfully", format_response(task, 'task'), 201)
