@@ -79,3 +79,12 @@ def success_response(message, data=None, status_code=200):
     # 'status_code' represents the HTTP status code (default is 200 for OK)
     return make_response("success", message, data, status_code)
 
+# Generate a standardized "not found" error response for missing resources
+def not_found_response(message="Resource not found"):
+    # Call the 'make_response' function to build an error response object
+    # The first argument "error" indicates the response status
+    # 'message' provides a description of the error (default is "Resource not found")
+    # The 'data' field is set to None since no resource data is returned
+    # The HTTP status code 404 indicates that the requested resource was not found
+    return make_response("error", message, None, 404)
+
