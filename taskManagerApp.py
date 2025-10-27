@@ -182,32 +182,46 @@ def create_task():
 # Define an endpoint to update or mark the status of an existing task
 @app.route('/api/v1/task/<int:task_id>/status/update', methods=['PUT'])
 def mark_task_as_completed(task_id):
+    # Get JSON data from the request body
     data = request.get_json()
-    allowed_statuses = ['pending', 'in-progress', 'completed'] # List of allowable task statuses
+
+    # Define allowed task statuses
+    allowed_statuses = ['pending', 'in-progress', 'completed']
+
+    # Retrieve the task by its ID
     task = tasks.get(task_id)
 
-    # Payload validation
+    # Check if the request contains a 'status' field
     if not data or 'status' not in data:
         return bad_request_response("status field is required")
 
-    # Ensure only allowable status   
+    # Ensure the status value is one of the allowed statuses
     if data['status'] not in allowed_statuses:
         return bad_request_response("Invalid task status. Allowed values are: pending, in-progress, completed")
     
-    # Ensure task exists
+    # Verify that the task exists
     if not task:
         return not_found_response(f"Task with id {task_id} not found")
     
-    # Prevent updating already completed task status
+    # Prevent changes if the task is already marked as completed
     if task['status'] == 'completed':
         return bad_request_response(f"Task with id {task_id} is already marked as completed")
+
+    # Update the task status
     task['status'] = data['status']
     
-    # Update completed_at timestamp only when task is marked as "completed"
+    # Record completion time only when task is marked as "completed"
     if data['status'] == 'completed':
         task['completed_at'] = datetime.now(timezone.utc).isoformat()
     
+    # Update the 'updated_at' timestamp for all status changes
     task['updated_at'] = datetime.now(timezone.utc).isoformat()
+
+    # Save the updated task back into the dictionary
     tasks[task_id] = task
 
-    return success_response(f"Task with id {task_id} marked as {data['status']} successfully", format_response(task, 'task'))
+    # Return a success response with the updated task details
+    return success_response(
+        f"Task with id {task_id} marked as {data['status']} successfully",
+        format_response(task, 'task')
+    )
