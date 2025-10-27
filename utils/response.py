@@ -69,3 +69,13 @@ def format_tasks(tasks):
     # Call the 'format_task' function on each task to format its details
     # Return a new list containing all formatted task dictionaries
     return [format_task(task) for task in tasks]
+
+# Generate a standardized success response for API requests
+def success_response(message, data=None, status_code=200):
+    # Call the 'make_response' function to build a response object
+    # The first argument "success" indicates the response status
+    # 'message' provides a success message describing the outcome
+    # 'data' holds any additional information or payload (default is None)
+    # 'status_code' represents the HTTP status code (default is 200 for OK)
+    return make_response("success", message, data, status_code)
+
