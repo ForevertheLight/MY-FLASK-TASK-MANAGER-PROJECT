@@ -97,3 +97,12 @@ def bad_request_response(message="Bad request"):
     # The HTTP status code 400 represents a client-side error (bad request)
     return make_response("error", message, None, 400)
 
+# Generate a standardized "internal server error" response for unexpected server issues
+def internal_error_response(message="Internal server error"):
+    # Call the 'make_response' function to build an error response object
+    # The first argument "error" indicates that a server-side failure occurred
+    # 'message' provides a description of the error (default is "Internal server error")
+    # The 'data' field is set to None since no data can be returned due to the error
+    # The HTTP status code 500 indicates a server-side error
+    return make_response("error", message, None, 500)
+
